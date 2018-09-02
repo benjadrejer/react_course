@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './../components/Perons/Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit.js';
+
+export const AuthContext = React.createContext(false);
 
 class App extends Component {
+  constructor(props){
+    super(props)
 
-  state = {
-    persons: [
-      { id: 'fsef43', name: 'Max', age: 28},
-      { id: 'efs523f', name: 'Manu', age: 29},
-      { id: 'ef423r', name: 'Stephanie', age: 26}
-    ],
-    otherState: 'some other value',
-    showPersons: false
-  };
+    this.state = {
+      persons: [
+        { id: 'fsef43', name: 'Max', age: 28},
+        { id: 'efs523f', name: 'Manu', age: 29},
+        { id: 'ef423r', name: 'Stephanie', age: 26}
+      ],
+      otherState: 'some other value',
+      showPersons: false,
+      authenticated: false,
+    };
+  }
+  
 
   // switchNameHandler = (newName, newAge) => {
   //   //console.log('Was clicked!');
@@ -56,31 +64,22 @@ class App extends Component {
     this.setState({showPersons: !doesShow});
   }
 
-  render() {
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+  }
 
-    const style = {
-      backgroundColor: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
+  render() {
 
     let persons = null;
 
     if(this.state.showPersons){
       persons = (
         <div>
-        {
-          this.state.persons.map((person, index) => {
-            return <Person 
-              name={person.name} 
-              age={person.age}
-              click={this.deletePersonHandler.bind(this, index)}
-              changed={(event) => this.nameChangeHandler(event, person.id)}
-              key={person.id}
-              />})
-        }
+         <Persons 
+          persons={this.state.persons} 
+          clicked={this.deletePersonHandler} 
+          changed={this.nameChangeHandler} 
+         />
         </div>
         );
       
@@ -104,13 +103,14 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
-        <h1>Hi, I'm a react app</h1>
-        <button 
-          style={style}
-          onClick={this.togglePersonsHandler}
-          >Toggle Persons</button>
-          
+      <>
+      <button onClick={() => {this.setState({showPersons: true})}} />
+          <Cockpit 
+          showPersons={this.state.showPerons} 
+          login={this.loginHandler}
+          persons={persons}
+          toggle={this.togglePersonsHandler} />
+          <AuthContext.Provider value={this.state.authenticated}>
           {
             persons
             /* { this.state.showPersons ?  
@@ -129,7 +129,8 @@ class App extends Component {
               changed={this.nameChangeHandler}
               >My hobbies: Bouldering</Person>
             </div> : null} */}
-      </div>
+          </AuthContext.Provider>
+      </>
     );
   }
 }
