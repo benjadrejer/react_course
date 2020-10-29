@@ -103,10 +103,10 @@ class App extends Component {
     }
 
     return (
-      <>
+      <React.Fragment>
       <button onClick={() => {this.setState({showPersons: true})}} />
           <Cockpit 
-          showPersons={this.state.showPerons} 
+          showPersons={this.state.persons} 
           login={this.loginHandler}
           persons={persons}
           toggle={this.togglePersonsHandler} />
@@ -130,7 +130,7 @@ class App extends Component {
               >My hobbies: Bouldering</Person>
             </div> : null} */}
           </AuthContext.Provider>
-      </>
+      </React.Fragment>
     );
   }
 }
