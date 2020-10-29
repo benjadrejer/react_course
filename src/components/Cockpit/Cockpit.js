@@ -1,6 +1,6 @@
 import React from 'react';
 
-const cockpit = ({toggle}) => {
+const cockpit = ({toggle, login}) => {
 
     const style = {
         backgroundColor: 'white',
@@ -17,7 +17,7 @@ const cockpit = ({toggle}) => {
             style={style}
             onClick={toggle}
             >Toggle Persons</button>
-            <button onClick={props.login}>Log in</button>
+            <button onClick={login}>Log in</button>
         </div>
     );
 };

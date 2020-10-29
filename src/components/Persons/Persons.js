@@ -3,27 +3,6 @@ import React, {Component} from 'react';
 import Person from './Person/Person';
 
 class Persons extends Component {
-
-    componentWillMount () {
-
-    }
-
-    componentWillReceiveProps(nextProps){
-
-    }
-
-    shouldComponentUpdate(nextProps, nextState){
-        return true;
-    }
-
-    componentWillUpdate(nextProps, nextState){
-
-    }
-
-    componentDidUpdate(){
-        
-    }
-
     render(){
         return this.props.persons.map((person, index) => {
             return <Person 
